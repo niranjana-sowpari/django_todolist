@@ -1,0 +1,38 @@
+{% extends "main/base.html" %}
+
+{% block title %}The Todolist{% endblock %}
+
+{% block body %}
+<h3>{{ls.name}}</h3><br>
+<form method = "post" action = "#">
+{% csrf_token %}
+
+	
+		{% for item in ls.item_set.all %}
+		<div class="input-group mb-3">
+			<div class="input-group-prepend">
+				<div class="input-group-text">
+					{% if item.complete == True %}		
+						<input type="checkbox" name="c{{item.id}}" value="checked" checked>
+					{% else %}
+						<input type="checkbox" name="c{{item.id}}" value="checked">
+					{% endif %}
+				</div>
+			</div>
+			<input type="text" value="{{item.text}}" class="form-control">
+		</div>
+		{% endfor %}
+
+	<br>
+	<div class="input-group mb-3">
+		<div class="input-group-prepend">
+			<button type="submit" name="add" value="add" class="btn btn-primary">Add item</button>
+		</div>
+	<input type="text" name="new">
+	</div>
+
+	<button type="submit" name="save" value="save" class="btn btn-primary">Save</button>
+	
+	
+</form>
+{% endblock %}
